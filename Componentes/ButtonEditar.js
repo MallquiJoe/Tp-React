@@ -11,8 +11,7 @@ export default function ButtonEditar ({onPress}) {
             start={{x:0, y:0}}
             end={{x:1, y:1}} 
             style={styles.button}>
-           <Text style={styles.text}>Editar Habitos
-           </Text>
+           <Text style={styles.text}>Guardar Cambios</Text>
           </LinearGradient>
         </TouchableOpacity>
     );

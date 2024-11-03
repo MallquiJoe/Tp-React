@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import appFirebase from '../credenciales';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-import ButtonAceptar from '../Componentes/ButtonAceptar';  // Asegúrate de que el nombre sea correcto
+import ButtonAceptar from '../Componentes/ButtonAceptar';  
 
 const auth = getAuth(appFirebase);
 
