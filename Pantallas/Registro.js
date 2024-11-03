@@ -2,9 +2,9 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Alert, ActivityIndicator, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import React, { useState } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import ButtonGradient from '../Componentes/ButtonGradient';
 import appFirebase from '../credenciales';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import ButtonAceptar from '../Componentes/ButtonAceptar';  // Asegúrate de que el nombre sea correcto
 
 const auth = getAuth(appFirebase);
 
@@ -27,7 +27,6 @@ export default function Registro(props) {
     const handleRegister = async () => {
         const { username, email, password, phone } = formData;
 
-        // Validaciones de datos
         if (!username || !email || !password || !phone) {
             Alert.alert('Error', 'Todos los campos son obligatorios');
             return;
@@ -41,14 +40,13 @@ export default function Registro(props) {
             return;
         }
 
-        setLoading(true); // Mostrar el indicador de carga
+        setLoading(true);
 
         try {
             await createUserWithEmailAndPassword(auth, email, password);
             Alert.alert('Cuenta creada', 'Tu cuenta ha sido creada exitosamente');
             props.navigation.navigate('Login');
         } catch (error) {
-            // Manejo de errores específicos de Firebase
             switch (error.code) {
                 case 'auth/email-already-in-use':
                     Alert.alert('Error', 'Este email ya está en uso');
@@ -64,7 +62,7 @@ export default function Registro(props) {
                     break;
             }
         } finally {
-            setLoading(false); // Ocultar el indicador de carga
+            setLoading(false);
         }
     };
 
@@ -114,12 +112,7 @@ export default function Registro(props) {
                     {loading ? (
                         <ActivityIndicator size="large" color="#0000ff" />
                     ) : (
-                        <ButtonGradient 
-                            onPress={handleRegister} 
-                            text="Crear" 
-                            icon="arrow-forward" 
-                            disabled={loading} // Deshabilitar el botón si está cargando
-                        />
+                        <ButtonAceptar onPress={handleRegister} />
                     )}
 
                     <StatusBar style="auto" />

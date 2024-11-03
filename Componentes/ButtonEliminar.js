@@ -10,8 +10,7 @@ export default function ButtonEliminar({ onPress }) {
                 colors={['#FF6347', '#FF7F7F', '#FFFFFF']}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }} 
-                style={styles.button}
-            >
+                style={styles.button}>
                 <Text style={styles.text}>Eliminar Hábito</Text>
             </LinearGradient>
         </TouchableOpacity>

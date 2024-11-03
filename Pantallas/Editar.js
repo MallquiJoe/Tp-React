@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Button, StyleSheet, Text, Alert, ActivityIndicator } from 'react-native';
+import { View, TextInput, StyleSheet, Text, Alert, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ButtonEditar from '../Componentes/ButtonEditar'; 
+import ButtonEliminar from '../Componentes/ButtonEliminar'; 
 
 const Editar = ({ route, navigation }) => {
-  const { habit } = route.params || {}; // Obtenemos el hábito de los parámetros
+  const { habit } = route.params || {};
   const [name, setName] = useState('');
   const [category, setCategory] = useState('');
   const [categoryError, setCategoryError] = useState('');
-  const [loading, setLoading] = useState(false); // Estado de carga
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (habit) {
@@ -33,8 +35,7 @@ const Editar = ({ route, navigation }) => {
       setCategoryError('');
     }
 
-    setLoading(true); // Mostrar indicador de carga
-
+    setLoading(true);
     try {
       const storedHabits = await AsyncStorage.getItem('habitos');
       const habits = storedHabits ? JSON.parse(storedHabits) : [];
@@ -53,7 +54,7 @@ const Editar = ({ route, navigation }) => {
       console.error('Error al guardar el hábito:', error);
       Alert.alert('Error', 'Hubo un problema al guardar el hábito.');
     } finally {
-      setLoading(false); // Ocultar indicador de carga
+      setLoading(false);
     }
   };
 
@@ -67,7 +68,7 @@ const Editar = ({ route, navigation }) => {
           text: "Eliminar",
           style: "destructive",
           onPress: async () => {
-            setLoading(true); // Mostrar indicador de carga
+            setLoading(true);
             try {
               const storedHabits = await AsyncStorage.getItem('habitos');
               const habits = storedHabits ? JSON.parse(storedHabits) : [];
@@ -81,7 +82,7 @@ const Editar = ({ route, navigation }) => {
               console.error('Error al eliminar el hábito:', error);
               Alert.alert('Error', 'Hubo un problema al eliminar el hábito.');
             } finally {
-              setLoading(false); // Ocultar indicador de carga
+              setLoading(false);
             }
           },
         },
@@ -96,22 +97,26 @@ const Editar = ({ route, navigation }) => {
         style={styles.input}
         value={name}
         onChangeText={setName}
+        placeholder="Ingrese el nombre del hábito"
+        placeholderTextColor="#aaa"
       />
       <Text style={styles.label}>Categoría</Text>
       <TextInput
-        style={styles.input}
+        style={[styles.input, categoryError ? styles.inputError : null]}
         value={category}
         onChangeText={setCategory}
+        placeholder="Ingrese una categoría (bueno, malo, regular)"
+        placeholderTextColor="#aaa"
       />
       {categoryError ? <Text style={styles.error}>{categoryError}</Text> : null}
       {loading ? (
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (
-        <Button title="Guardar Cambios" onPress={handleSave} />
+        <View style={styles.buttonContainer}>
+          <ButtonEditar onPress={handleSave} />
+          <ButtonEliminar onPress={handleDelete} />
+        </View>
       )}
-      <View style={styles.deleteButtonContainer}>
-        <Button title="Eliminar Hábito" color="red" onPress={handleDelete} />
-      </View>
     </View>
   );
 };
@@ -126,20 +131,29 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginTop: 20,
+    color: '#333',
   },
   input: {
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
-    paddingVertical: 5,
-    marginBottom: 20,
+    paddingVertical: 8,
+    paddingHorizontal: 5,
+    marginBottom: 15,
+    borderRadius: 5,
+    backgroundColor: '#fff',
+    elevation: 2,
+  },
+  inputError: {
+    borderBottomColor: 'red',
   },
   error: {
     color: 'red',
     marginTop: 5,
   },
-  deleteButtonContainer: {
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginTop: 20,
-    alignItems: 'center',
   },
 });
 

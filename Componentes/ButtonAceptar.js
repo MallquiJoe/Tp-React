@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 
-export default function ButtonRegistrar({ onPress }) {
+export default function ButtonAceptar({ onPress }) {  // Cambié el nombre aquí
     return (
         <TouchableOpacity style={styles.container} onPress={onPress}>
             <LinearGradient
@@ -11,7 +11,7 @@ export default function ButtonRegistrar({ onPress }) {
                 end={{ x: 1, y: 1 }}
                 style={styles.button}
             >
-                <Text style={styles.text}>Registrar</Text>
+                <Text style={styles.text}>Aceptar</Text>
             </LinearGradient>
         </TouchableOpacity>
     );
